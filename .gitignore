@@ -1,0 +1,14 @@
+# Generated build/test state
+**/build/
+**/.gradle/
+**/__pycache__/
+**/*.pyc
+
+# Factory secrets and locally provisioned credentials
+nrf52840/include/factory_credentials.h
+*.pem
+*.key
+lock.json
+phone.json
+root.json
+ca.json
