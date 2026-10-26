@@ -36,14 +36,22 @@ key an toàn tại nhà máy hoặc secure element, APPROTECT và quy trình thu
 
 ## Build và test
 
-Trong môi trường NCS 3.4.0 đã cài toolchain:
+Với NCS 3.4.0 đã cài tại `~/ncs`, chạy trực tiếp:
 
 ```sh
-west build -b nrf52840dk/nrf52840 -s nrf52840 -d build/lock \
-  --sysbuild -- -DSB_CONFIG_BOOTLOADER_MCUBOOT=y
+./build_fw.sh
+./flash_fw.sh                    # nạp qua J-Link trên nRF52840 DK
+./flash_fw.sh --dev-id 12345678  # chọn board khi cắm nhiều DK
 sh nrf52840/tests/run_host_tests.sh
 sh nrf52840/tests/run_vector_test.sh
 ```
+
+Hai script chạy từ bất kỳ thư mục nào và mặc định dùng `build/lock`. Có thể
+đặt `BUILD_DIR` để đổi thư mục build cho cả hai. Script flash dùng image đã
+build và không tự rebuild. Cần kết nối cổng J-Link USB của DK trước khi flash.
+Script tự nạp môi trường từ toolchain NCS nếu `west` chưa có trong `PATH`.
+Nếu NCS cài ở chỗ khác, đặt `NCS_HOME`; nếu có nhiều toolchain, đặt
+`TOOLCHAIN_DIR` tới thư mục chứa `environment.json`.
 
 Sysbuild tạo `dfu_application.zip`. **Khóa ký mặc định của SDK chỉ dành cho
 development**; phải cấu hình khóa ký MCUboot riêng trước khi phát hành.
